@@ -1,35 +1,26 @@
 pipeline {
-      agent any
-      stages {
-            stage('Init') {
-                  steps {
-                        echo 'Hi, this is Anshul from LevelUp360'
-                        echo 'We are Starting the Testing'
-                  }
-            }
-            stage('Build') {
-                  steps {
-                        echo 'Building Sample Maven Project'
-                  }
-            }
-            stage('Deploy') {
-                  steps {
-                        echo "Deploying in Staging Area"
-                  }
-            }
-            stage('Deploy Production') {
-                  steps {
-                        echo "Deploying in Production Area"
-                  }
-            }
-      }
-}
+    
+    agent any
+    environment {
+        RELEASE='20.04'
+    }
 
-post {
-     success {
-         echo "Pipeline succeeded"
-     }
-     failure {
-         echo "Pipeline Failed"
-     }
+    stages {
+
+        stage('Build') {
+            agent any
+            environment {
+                LOG_LEVEL='INFO'
+            }
+            steps {
+                echo "Building release ${RELEASE} with log level ${LOG_LEVEL}..."
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                echo "Testing. I can see release ${RELEASE}, but not log level ${LOG_LEVEL}"
+            }
+        }
+    }
 }
