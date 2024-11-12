@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                // Clone the repository containing the project
+                git 'ihttps://github.com/Selvavignesh2/Learning'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                // Build the Docker image
+                sh 'docker build -t amazon-replica:latest .'
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                // Stop and remove any running container with the same name
+                sh '''
+                docker stop amazon-replica || true
+                docker rm amazon-replica || true
+                '''
+
+                // Run the Docker container
+                sh 'docker run -d --name amazon-replica -p 8080:80 amazon-replica:latest'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'The website has been successfully deployed and is accessible at port 8080!'
+        }
+        failure {
+            echo 'The build or deployment failed. Please check the logs for more details.'
+        }
+    }
+}
+
