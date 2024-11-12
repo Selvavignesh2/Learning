@@ -25,14 +25,14 @@ pipeline {
                 '''
 
                 // Run the Docker container
-                sh 'docker run -d --name amazon-replica -p 8080:80 amazon-replica:latest'
+                sh 'docker run -d --name amazon-replica -p 90:80 amazon-replica:latest'
             }
         }
     }
 
     post {
         success {
-            echo 'The website has been successfully deployed and is accessible at port 8080!'
+            echo 'The website has been successfully deployed and is accessible at port 9090!'
         }
         failure {
             echo 'The build or deployment failed. Please check the logs for more details.'
