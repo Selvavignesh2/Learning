@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage ('Docker Image Build') {
+            steps {
+                sh 'docker build -t selvavignesh02/pythonapp:latest .'
+            }
+        }
+        stage ('Run Docker Container') {
+            steps {
+                sh 'dokcer run -d -p 9090:9090 --name learning-image selvavignesh02/pythonapp:latest'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "build succeeded and found the versison number"
+        }
+        failure {
+            echo "failed to retrive the version number"
+        }
+    }
+}
