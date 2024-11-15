@@ -2,24 +2,25 @@ pipeline {
     agent any
     
     stages {
-        stage ('Docker Image Build') {
+        stage('Docker Image Build') {
             steps {
-                sh 'docker build -t selvavignesh02/pythonapp:latest myapp/Dockerfile'
+                sh 'docker build -t selvavignesh02/pythonapp:latest myapp'
             }
         }
-        stage ('Run Docker Container') {
+        stage('Run Docker Container') {
             steps {
-                sh 'dokcer run -d -p 9090:9090 --name learning-image selvavignesh02/pythonapp:latest'
+                sh 'docker run -d -p 9090:9090 --name learning-image selvavignesh02/pythonapp:latest'
             }
         }
     }
 
     post {
         success {
-            echo "build succeeded and found the versison number"
+            echo "Build succeeded and the container is running."
         }
         failure {
-            echo "failed to retrive the version number"
+            echo "Failed to build the Docker image or run the container."
         }
     }
 }
+
