@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Run Docker Container') {
             steps {
-                sh 'docker run -d -p 9090:9090 --name learning-image selvavignesh02/pythonapp:latest'
+                sh 'docker run -d -p 9090:9090 --name my-image selvavignesh02/pythonapp:latest'
             }
         }
     }
