@@ -1,36 +1,37 @@
 pipeline {
     agent any 
+
     environment {
-        docker_image = "selvavignesh02/grocery-ordering:latest groceryapp"
+        docker_image = "selvavignesh02/grocery-ordering:latest"
     }
+
     stages {
-        stage ('checkout repository')
-        {
+        stage ('checkout repository') {
             steps {
                 checkout scm
             }
         }
-        stage ('Build Grocery Image-Docker')
-        {
+
+        stage ('Build Grocery Image-Docker') {
             steps {
-                sh 'docker.bulid -t (docker_image)'
+                sh 'docker build -t ${docker_image} .'
             }
         }
-        stage ('Running Container')
-        {
+
+        stage ('Running Container') {
             steps {
                 sh 'docker run -d -p 9090:5000 --name grocery-container ${docker_image}'
             }
         }
     }
 
-    post
-    {
+    post {
         success {
-            echo "Running a Grocery container"
+            echo "Running the Grocery container successfully."
         }
         failure {
-            echo "Failed to Build a container"
+            echo "Failed to build or run the container."
         }
     }
 }
+
