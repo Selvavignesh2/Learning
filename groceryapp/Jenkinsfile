@@ -1,0 +1,41 @@
+
+pipeline {
+    agent any 
+
+    environment {
+        docker_image = "selvavignesh02/grocery-ordering:latest groceryapp"
+    }
+
+    stages {
+        stage ('checkout repository')
+        {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage ('Build Grocery Image-Docker')
+        {
+            steps {
+                sh 'docker.bulid(docker_image)'
+            }
+        }
+
+        stage ('Running Container')
+        {
+            steps {
+                sh 'docker.run(docker_image, -d -p 9090:5000)'
+            }
+        }
+    }
+
+    post
+    {
+        success {
+            echo "Running a Grocery container"
+        }
+        failure {
+            echo "Failed to Build a container"
+        }
+    }
+}
