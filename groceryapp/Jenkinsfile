@@ -1,37 +1,25 @@
 pipeline {
-    agent any 
-
-    environment {
-        docker_image = "selvavignesh02/grocery-ordering:latest"
-    }
-
+    agent any
+    
     stages {
-        stage ('checkout repository') {
+        stage ('Docker Image Build') {
             steps {
-                checkout scm
+                sh 'docker build -t selvavignesh02/grocery-ordering:latest groceryapp'
             }
         }
-
-        stage ('Build Grocery Image-Docker') {
+        stage ('Run Docker Container') {
             steps {
-                sh 'docker build -t ${docker_image} .'
-            }
-        }
-
-        stage ('Running Container') {
-            steps {
-                sh 'docker run -d -p 9090:5000 --name grocery-container ${docker_image}'
+                sh 'dokcer run -d -p 9090:5000 --name grocery selvavignesh02/grocery-ordering:latest'
             }
         }
     }
 
     post {
         success {
-            echo "Running the Grocery container successfully."
+            echo "build succeeded and found the versison number"
         }
         failure {
-            echo "Failed to build or run the container."
+            echo "failed to retrive the version number"
         }
     }
 }
-
