@@ -17,7 +17,7 @@ pipeline {
         stage ('Build Grocery Image-Docker')
         {
             steps {
-                sh 'docker.bulid(docker_image)'
+                sh 'docker.build(docker_image)'
             }
         }
 
