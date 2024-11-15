@@ -1,11 +1,8 @@
-
 pipeline {
     agent any 
-
     environment {
         docker_image = "selvavignesh02/grocery-ordering:latest groceryapp"
     }
-
     stages {
         stage ('checkout repository')
         {
@@ -13,18 +10,16 @@ pipeline {
                 checkout scm
             }
         }
-
         stage ('Build Grocery Image-Docker')
         {
             steps {
-                sh 'docker.build(docker_image)'
+                sh 'docker.bulid -t (docker_image)'
             }
         }
-
         stage ('Running Container')
         {
             steps {
-                sh 'docker.run(docker_image, -d -p 9090:5000)'
+                sh 'docker run -d -p 9090:5000 --name grocery-container ${docker_image}'
             }
         }
     }
