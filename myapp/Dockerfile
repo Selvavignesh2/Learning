@@ -8,7 +8,7 @@ RUN pip install --no-cache-dir flask
 
 EXPOSE 9090
 
-CMD [ "pyhton","app.py" ]
+CMD [ "python","app.py" ]
 
 
 
