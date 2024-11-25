@@ -9,7 +9,7 @@ pipeline {
         }
         stage ('Deploy Application') {
             steps {
-                sh 'dokcer run -d -p 9090:5000 --name web selvavignesh02/online-web:v1'
+                sh 'docker run -d -p 9090:5000 --name web selvavignesh02/online-web:v1'
             }
         }
     }
