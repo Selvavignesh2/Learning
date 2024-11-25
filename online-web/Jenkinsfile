@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage ('Docker Image Build') {
             steps {
-                sh 'docker build -t selvavignesh02/online-webs:v1 online-web'
+                sh 'docker build -t selvavignesh02/online-web:v1 online-web'
             }
         }
         stage ('Deploy Application') {
