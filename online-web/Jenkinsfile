@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    
+    stages {
+        stage ('Docker Image Build') {
+            steps {
+                sh 'docker build -t selvavignesh02/online-website:v1 .'
+            }
+        }
+        stage ('Deploy Application') {
+            steps {
+                sh 'dokcer run -d -p 9090:5000 --name grocery selvavignesh02/grocery-ordering:latest'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "build succeeded and found the versison number"
+        }
+        failure {
+            echo "failed to retrive the version number"
+        }
+    }
+}
