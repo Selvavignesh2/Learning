@@ -4,12 +4,12 @@ pipeline {
     stages {
         stage ('Docker Image Build') {
             steps {
-                sh 'docker build -t selvavignesh02/online-website:v1 .'
+                sh 'docker build -t selvavignesh02/online-webs:v1 online-web'
             }
         }
         stage ('Deploy Application') {
             steps {
-                sh 'dokcer run -d -p 9090:5000 --name grocery selvavignesh02/online-website:v1'
+                sh 'dokcer run -d -p 9090:5000 --name grocery selvavignesh02/online-web:v1'
             }
         }
     }
@@ -23,3 +23,4 @@ pipeline {
         }
     }
 }
+
